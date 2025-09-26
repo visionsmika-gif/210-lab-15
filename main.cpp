@@ -1,9 +1,3 @@
-// Code a Movie class that has the screen writer, the year released, and the title as its private member variables. It has the standard setters and getters for each private member variable. Also code a print() method which prints the object data in a simple format.
-// Your code should read data from an input file, using the data below, which lists data in this order: title, year released, screen writer name.
-// Read this data into a temporary Movie object.Then append that object to your container.
-// For your container, you can choose an <array> class array or a <vector> class vector.Store your four records in this container.
-// Towards the end of your main() function, output the contents of the array / vector.
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -13,15 +7,22 @@ using namespace std;
 
 class Movie {
 public:
+	// Set functions
 	void setScreenWriter(const string& writer)	{ screenWriter = writer; }
 	void setReleaseYear(int year)				{ releaseYear = year; }
 	void setTitle(string t)						{ title = t; }
 
+	// Get functions
 	string getScreenWriter() const	{ return screenWriter; }
 	int getReleaseYear() const		{ return releaseYear; }
 	string getTitle() const			{ return title; }
 
-	// TODO: add print method
+	// Function to print movie information
+	void print() const {
+		cout << "Movie: " << getTitle() << "\n";
+		cout << "\tYear released: " << getReleaseYear() << "\n";
+		cout << "\tScreenwriter: " << getScreenWriter() << "\n";
+	}
 private:
 	string screenWriter;
 	int releaseYear;
@@ -29,12 +30,13 @@ private:
 };
 
 int main() {
-	Movie movie;
+	Movie tempMovie;
 	string title;
 	int year;
 	string writer;
 	vector<Movie> movies;
 
+	// Ensure that file is open
 	ifstream movieFile;
 	movieFile.open("input.txt");
 	if (!movieFile) {
@@ -42,12 +44,27 @@ int main() {
 		return 1;
 	}
 
+	// Read file into temporary movement object
 	while (getline(movieFile, title)) {
-		
+		movieFile >> year;
+		movieFile.ignore();
+		getline(movieFile, writer);
 
+		tempMovie.setTitle(title);
+		tempMovie.setReleaseYear(year);
+		tempMovie.setScreenWriter(writer);
+
+		// Store the movies in a vector
+		movies.push_back(tempMovie);
 	}
 
 	movieFile.close();
+
+	// Output the movies
+	for (Movie m : movies) {
+		m.print();
+		cout << "\n";
+	}
 
 	return 0;
 }

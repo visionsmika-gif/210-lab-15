@@ -1,3 +1,6 @@
+// COMSC-210 | Lab 15 | Mika Aquino
+// IDE used: Visual Studio 2022
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -18,11 +21,7 @@ public:
 	string getTitle() const			{ return title; }
 
 	// Function to print movie information
-	void print() const {
-		cout << "Movie: " << getTitle() << "\n";
-		cout << "\tYear released: " << getReleaseYear() << "\n";
-		cout << "\tScreenwriter: " << getScreenWriter() << "\n";
-	}
+	void print() const;
 private:
 	string screenWriter;
 	int releaseYear;
@@ -36,7 +35,7 @@ int main() {
 	string writer;
 	vector<Movie> movies;
 
-	// Ensure that file is open
+	// Ensure the file is open
 	ifstream movieFile;
 	movieFile.open("input.txt");
 	if (!movieFile) {
@@ -44,7 +43,7 @@ int main() {
 		return 1;
 	}
 
-	// Read file into temporary movement object
+	// Read the file into temporary Movie object
 	while (getline(movieFile, title)) {
 		movieFile >> year;
 		movieFile.ignore();
@@ -67,4 +66,11 @@ int main() {
 	}
 
 	return 0;
+}
+
+// Implementation for print member function
+void Movie::print() const {
+	cout << "Movie: " << getTitle() << "\n";
+	cout << "\tYear released: " << getReleaseYear() << "\n";
+	cout << "\tScreenwriter: " << getScreenWriter() << "\n";
 }
